@@ -3,8 +3,9 @@ globals "terraform" {
 }
 
 globals "terraform" "backend" {
-  bucket = "terramate-example-terraform-state-backend-speaktome"
-  region = "us-west-2"
+  bucket  = "terramate-example-terraform-state-backend-speaktome"
+  region  = "us-west-2"
+  profile = "workloads"
 }
 
 globals "aws" "oidc" {

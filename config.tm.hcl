@@ -3,9 +3,8 @@ globals "terraform" {
 }
 
 globals "terraform" "backend" {
-  bucket  = "terramate-example-terraform-state-backend-speaktome"
-  region  = "us-west-2"
-  profile = "workloads"
+  bucket = "terramate-example-terraform-state-backend-speaktome"
+  region = "us-west-2"
 }
 
 globals "aws" "oidc" {
@@ -20,6 +19,6 @@ globals "terraform" "providers" "aws" {
   source  = "hashicorp/aws"
   version = "~> 5.89"
   config = {
-    region = "us-east-1"
+    region = "us-west-2"
   }
 }

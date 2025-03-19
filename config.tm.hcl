@@ -10,7 +10,6 @@ globals "terraform" "backend" {
 
 globals "aws" "oidc" {
   github_repositories = [
-    "terramate-io/terramate-quickstart-aws",
     "pandaPowder/terramate-aws",
     # "another-org/another-repo:ref:refs/heads/main",
   ]

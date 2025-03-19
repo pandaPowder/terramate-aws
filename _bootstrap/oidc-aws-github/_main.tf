@@ -3,7 +3,6 @@
 module "oidc_github" {
   attach_admin_policy = true
   github_repositories = [
-    "terramate-io/terramate-quickstart-aws",
     "pandaPowder/terramate-aws",
   ]
   source  = "unfunco/oidc-github/aws"

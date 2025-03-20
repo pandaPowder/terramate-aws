@@ -14,10 +14,10 @@ generate_hcl "eks.tf" {
       }
     }
     variable "vpc_id" {
-      value = data.terraform_remote_state.network.outputs.vpc_id
+      default = data.terraform_remote_state.network.outputs.vpc_id
     }
     variable "subnet_ids" {
-      value = data.terraform_remote_state.network.outputs.subnet_ids
+      default = data.terraform_remote_state.network.outputs.subnet_ids
     }
 
     module "eks" {

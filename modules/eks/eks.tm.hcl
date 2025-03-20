@@ -5,6 +5,21 @@ generate_hcl "eks.tf" {
     ]
   }
   content {
+    data "terraform_remote_state" "network" {
+      backend = "s3"
+      config = {
+        region = global.terraform.backend.region
+        bucket = global.terraform.backend.bucket
+        key    = tm_try(global.terraform.backend.key, "terraform/stacks/by-id/${terramate.stack.id}/terraform.tfstate")
+      }
+    }
+    variable "vpc_id" {
+      value = data.terraform_remote_state.network.outputs.vpc_id
+    }
+    variable "subnet_ids" {
+      value = data.terraform_remote_state.network.outputs.subnet_ids
+    }
+
     module "eks" {
       source  = "terraform-aws-modules/eks/aws"
       version = "~> 20.31"
@@ -20,15 +35,15 @@ generate_hcl "eks.tf" {
 
       eks_managed_node_groups = {
         dallas = {
-          instance_types = ["t3.medium"]
+          instance_types = [global.eks.instance_type]
           min_size       = 1
           max_size       = 3
           desired_size   = 2
         }
       }
 
-      vpc_id     = aws_vpc.main.id
-      subnet_ids = [for subnet in aws_subnet.public_subnet : subnet.id][count.index]
+      vpc_id     = data.terraform_remote_state.network.outputs.vpc_id
+      subnet_ids = data.terraform_remote_state.network.outputs.subnet_ids
       tags = merge(global.tags, {
         Environment = global.environment.environment
         Terraform   = "true"

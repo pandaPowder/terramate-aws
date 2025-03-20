@@ -1,5 +1,19 @@
 // TERRAMATE: GENERATED AUTOMATICALLY DO NOT EDIT
 
+data "terraform_remote_state" "network" {
+  backend = "s3"
+  config = {
+    bucket = "terramate-example-terraform-state-backend-speaktome"
+    key    = "terraform/stacks/by-id/779d8a8a-7e14-4701-9584-a80bf448905b/terraform.tfstate"
+    region = "us-west-2"
+  }
+}
+variable "vpc_id" {
+  value = data.terraform_remote_state.network.outputs.vpc_id
+}
+variable "subnet_ids" {
+  value = data.terraform_remote_state.network.outputs.subnet_ids
+}
 module "eks" {
   cluster_endpoint_public_access = true
   cluster_name                   = "dev-eks"
@@ -8,7 +22,7 @@ module "eks" {
     dallas = {
       desired_size = 2
       instance_types = [
-        "t3.medium",
+        "t3.micro",
       ]
       max_size = 3
       min_size = 1
@@ -16,7 +30,7 @@ module "eks" {
   }
   enable_cluster_creator_admin_permissions = true
   source                                   = "terraform-aws-modules/eks/aws"
-  subnet_ids                               = [for subnet in aws_subnet.public_subnet : subnet.id][count.index]
+  subnet_ids                               = data.terraform_remote_state.network.outputs.subnet_ids
   tags = merge({
     Environment = "dev"
     ManagedBy   = "terraform"
@@ -27,5 +41,5 @@ module "eks" {
     Terraform   = "true"
   })
   version = "~> 20.31"
-  vpc_id  = aws_vpc.main.id
+  vpc_id  = data.terraform_remote_state.network.outputs.vpc_id
 }

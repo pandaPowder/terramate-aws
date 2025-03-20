@@ -7,3 +7,7 @@ stack {
 globals "environment" {
   environment = "dev"
 }
+
+globals "eks" {
+  instance_type = "t3.micro"
+}

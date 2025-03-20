@@ -8,12 +8,6 @@ data "terraform_remote_state" "network" {
     region = "us-west-2"
   }
 }
-variable "vpc_id" {
-  default = data.terraform_remote_state.network.outputs.vpc_id
-}
-variable "subnet_ids" {
-  default = data.terraform_remote_state.network.outputs.subnet_ids
-}
 module "eks" {
   cluster_endpoint_public_access = true
   cluster_name                   = "dev-eks"

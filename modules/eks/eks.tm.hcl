@@ -13,12 +13,6 @@ generate_hcl "eks.tf" {
         key    = tm_try(global.terraform.backend.key, "terraform/stacks/by-id/${terramate.stack.id}/terraform.tfstate")
       }
     }
-    variable "vpc_id" {
-      default = data.terraform_remote_state.network.outputs.vpc_id
-    }
-    variable "subnet_ids" {
-      default = data.terraform_remote_state.network.outputs.subnet_ids
-    }
 
     module "eks" {
       source  = "terraform-aws-modules/eks/aws"

@@ -5,7 +5,7 @@ terraform {
     bucket         = "terramate-example-terraform-state-backend-speaktome"
     dynamodb_table = "terraform-lock"
     encrypt        = true
-    key            = "opentofu/stacks/by-id/f50a9ef3-c5de-48ab-8acf-a60d91bfef7b/opentofu.tfstate"
+    key            = "terraform/stacks/by-id/f0d685f8-20c3-418d-a8d5-dd1e87548a4a/terraform.tfstate"
     region         = "us-west-2"
   }
 }

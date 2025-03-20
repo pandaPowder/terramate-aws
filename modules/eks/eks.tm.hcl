@@ -9,7 +9,7 @@ generate_hcl "eks.tf" {
       source  = "terraform-aws-modules/eks/aws"
       version = "~> 20.31"
 
-      cluster_name    = "dallas"
+      cluster_name    = "${global.environment.environment}-eks"
       cluster_version = "1.31"
 
       # Optional
@@ -20,20 +20,19 @@ generate_hcl "eks.tf" {
 
       eks_managed_node_groups = {
         dallas = {
-          instance_types = ["t3.medium"]
+          instance_types = [global.eks.instance_type]
           min_size       = 1
           max_size       = 3
           desired_size   = 2
         }
       }
 
-      vpc_id     = aws_vpc.main.id
-      subnet_ids = aws_subnet.public_subnet.*.id
-
-      tags = {
-        Environment = "dev"
+      vpc_id     = data.terraform_remote_state.network.outputs.vpc_id
+      subnet_ids = data.terraform_remote_state.network.outputs.subnet_ids
+      tags = merge(global.tags, {
+        Environment = global.environment.environment
         Terraform   = "true"
-      }
+      })
     }
   }
 }

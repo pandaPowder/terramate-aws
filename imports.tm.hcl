@@ -5,3 +5,7 @@ import {
 import {
   source = "./modules/network/*.tm.hcl"
 }
+
+import {
+  source = "./modules/eks/*.tm.hcl"
+}

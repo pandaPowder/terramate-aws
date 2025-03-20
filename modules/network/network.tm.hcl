@@ -5,7 +5,9 @@ generate_hcl "network.tf" {
     ]
   }
   content {
-    data "aws_availability_zones" "available" {}
+    data "aws_availability_zones" "available" {
+      names = ["us-west-2a", "us-west-2b"]
+    }
 
     resource "aws_vpc" "main" {
       cidr_block = tm_try(global.networking.cidr, "10.0.0.0/16")

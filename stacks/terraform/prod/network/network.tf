@@ -1,6 +1,10 @@
 // TERRAMATE: GENERATED AUTOMATICALLY DO NOT EDIT
 
 data "aws_availability_zones" "available" {
+  names = [
+    "us-west-2a",
+    "us-west-2b",
+  ]
 }
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"

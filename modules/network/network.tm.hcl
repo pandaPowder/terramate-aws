@@ -10,7 +10,7 @@ generate_hcl "network.tf" {
     resource "aws_vpc" "main" {
       cidr_block = tm_try(global.networking.cidr, "10.0.0.0/16")
 
-      tags = merge(globals.tags, {
+      tags = merge(global.tags, {
         Name = "${terramate.stack.name}-vpc-eks"
       })
     }
@@ -22,7 +22,7 @@ generate_hcl "network.tf" {
       availability_zone       = data.aws_availability_zones.available.names[count.index]
       map_public_ip_on_launch = true
 
-      tags = merge(globals.tags, {
+      tags = merge(global.tags, {
         Name = "public-subnet-${count.index}"
       })
     }
@@ -30,7 +30,7 @@ generate_hcl "network.tf" {
     resource "aws_internet_gateway" "main" {
       vpc_id = aws_vpc.main.id
 
-      tags = merge(globals.tags, {
+      tags = merge(global.tags, {
         Name = "main-igw"
       })
     }
@@ -43,7 +43,7 @@ generate_hcl "network.tf" {
         gateway_id = aws_internet_gateway.main.id
       }
 
-      tags = merge(globals.tags, {
+      tags = merge(global.tags, {
         Name = "main-route-table"
       })
     }

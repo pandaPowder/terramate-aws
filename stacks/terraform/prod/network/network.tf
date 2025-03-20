@@ -4,7 +4,12 @@ data "aws_availability_zones" "available" {
 }
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
-  tags = merge(globals.tags, {
+  tags = merge({
+    Environment = "dev"
+    ManagedBy   = "terraform"
+    Owner       = "Dallas"
+    Project     = "terramate-eks"
+    }, {
     Name = "Prod Networking-vpc-eks"
   })
 }
@@ -13,19 +18,34 @@ resource "aws_subnet" "public_subnet" {
   cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
   count                   = 2
   map_public_ip_on_launch = true
-  tags = merge(globals.tags, {
+  tags = merge({
+    Environment = "dev"
+    ManagedBy   = "terraform"
+    Owner       = "Dallas"
+    Project     = "terramate-eks"
+    }, {
     Name = "public-subnet-${count.index}"
   })
   vpc_id = aws_vpc.main.id
 }
 resource "aws_internet_gateway" "main" {
-  tags = merge(globals.tags, {
+  tags = merge({
+    Environment = "dev"
+    ManagedBy   = "terraform"
+    Owner       = "Dallas"
+    Project     = "terramate-eks"
+    }, {
     Name = "main-igw"
   })
   vpc_id = aws_vpc.main.id
 }
 resource "aws_route_table" "public" {
-  tags = merge(globals.tags, {
+  tags = merge({
+    Environment = "dev"
+    ManagedBy   = "terraform"
+    Owner       = "Dallas"
+    Project     = "terramate-eks"
+    }, {
     Name = "main-route-table"
   })
   vpc_id = aws_vpc.main.id

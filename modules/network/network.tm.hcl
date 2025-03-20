@@ -1,12 +1,17 @@
 generate_hcl "network.tf" {
+  stack_filter {
+    project_paths = [
+      "/stacks/**/network", # match exact path
+    ]
+  }
   content {
     data "aws_availability_zones" "available" {}
 
     resource "aws_vpc" "main" {
-      cidr_block = "10.0.0.0/16"
+      cidr_block = tm_try(global.networking.cidr, "10.0.0.0/16")
 
       tags = merge(globals.tags, {
-        Name = "main-vpc-eks"
+        Name = "${terramate.stack.name}-vpc-eks"
       })
     }
 

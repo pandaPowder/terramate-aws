@@ -28,7 +28,7 @@ generate_hcl "eks.tf" {
       }
 
       vpc_id     = aws_vpc.main.id
-      subnet_ids = aws_subnet.public_subnet.*.id
+      subnet_ids = [for subnet in aws_subnet.public_subnet : subnet.id][count.index]
       tags = merge(global.tags, {
         Environment = global.environment.environment
         Terraform   = "true"

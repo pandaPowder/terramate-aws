@@ -16,7 +16,7 @@ module "eks" {
   }
   enable_cluster_creator_admin_permissions = true
   source                                   = "terraform-aws-modules/eks/aws"
-  subnet_ids                               = aws_subnet.public_subnet[*].id
+  subnet_ids                               = [for subnet in aws_subnet.public_subnet : subnet.id][count.index]
   tags = merge({
     Environment = "dev"
     ManagedBy   = "terraform"

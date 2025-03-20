@@ -1,13 +1,5 @@
 // TERRAMATE: GENERATED AUTOMATICALLY DO NOT EDIT
 
-data "terraform_remote_state" "network" {
-  backend = "s3"
-  config = {
-    bucket = "terramate-example-terraform-state-backend-speaktome"
-    key    = "terraform/stacks/by-id/779d8a8a-7e14-4701-9584-a80bf448905b/terraform.tfstate"
-    region = "us-west-2"
-  }
-}
 module "eks" {
   cluster_endpoint_public_access = true
   cluster_name                   = "dev-eks"

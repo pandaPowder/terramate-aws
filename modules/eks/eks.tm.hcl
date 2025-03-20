@@ -5,15 +5,6 @@ generate_hcl "eks.tf" {
     ]
   }
   content {
-    data "terraform_remote_state" "network" {
-      backend = "s3"
-      config = {
-        region = global.terraform.backend.region
-        bucket = global.terraform.backend.bucket
-        key    = tm_try(global.terraform.backend.key, "terraform/stacks/by-id/${terramate.stack.id}/terraform.tfstate")
-      }
-    }
-
     module "eks" {
       source  = "terraform-aws-modules/eks/aws"
       version = "~> 20.31"

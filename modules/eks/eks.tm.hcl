@@ -9,7 +9,7 @@ generate_hcl "eks.tf" {
       source  = "terraform-aws-modules/eks/aws"
       version = "~> 20.31"
 
-      cluster_name    = "dallas"
+      cluster_name    = "${global.environment.environment}-eks"
       cluster_version = "1.31"
 
       # Optional
@@ -29,11 +29,10 @@ generate_hcl "eks.tf" {
 
       vpc_id     = aws_vpc.main.id
       subnet_ids = aws_subnet.public_subnet.*.id
-
-      tags = {
-        Environment = "dev"
+      tags = merge(global.tags, {
+        Environment = global.environment.environment
         Terraform   = "true"
-      }
+      })
     }
   }
 }

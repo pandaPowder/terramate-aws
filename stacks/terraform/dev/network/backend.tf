@@ -6,7 +6,6 @@ terraform {
     dynamodb_table = "terraform-lock"
     encrypt        = true
     key            = "terraform/stacks/by-id/a10f10cb-3b7a-4447-a129-b8911d0e6de5/terraform.tfstate"
-    profile        = "workloads"
     region         = "us-west-2"
   }
 }

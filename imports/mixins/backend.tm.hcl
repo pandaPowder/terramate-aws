@@ -9,7 +9,6 @@ generate_hcl "backend.tf" {
         key            = tm_try(global.terraform.backend.key, "terraform/stacks/by-id/${terramate.stack.id}/terraform.tfstate")
         encrypt        = true
         dynamodb_table = tm_try(global.terraform.backend.dynamodb_table, "terraform-lock")
-        profile        = "workloads"
       }
     }
   }

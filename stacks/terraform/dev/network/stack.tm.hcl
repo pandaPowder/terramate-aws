@@ -7,3 +7,7 @@ stack {
 globals "networking" {
   cidr = "20.0.0.0/16"
 }
+
+globals "environment" {
+  environment = "dev"
+}

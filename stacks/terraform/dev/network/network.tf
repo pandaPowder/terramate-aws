@@ -4,7 +4,7 @@ data "aws_availability_zones" "available" {
 }
 resource "aws_vpc" "main" {
   cidr_block = "20.0.0.0/16"
-  id         = "MyNetworking-vpc-eks"
+  id         = "dev-vpc-eks"
   tags = merge({
     Environment = "dev"
     ManagedBy   = "terraform"

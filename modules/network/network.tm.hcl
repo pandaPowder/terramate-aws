@@ -9,7 +9,7 @@ generate_hcl "network.tf" {
 
     resource "aws_vpc" "main" {
       cidr_block = tm_try(global.networking.cidr, "10.0.0.0/16")
-      id         = "${terramate.stack.name}-vpc-eks"
+      id         = "${global.environment.environment}-vpc-eks"
       tags = merge(global.tags, {
         Name = "${terramate.stack.name}-vpc-eks"
       })
